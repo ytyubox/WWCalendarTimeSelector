@@ -8,6 +8,7 @@
 
 import UIKit
 
+
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, WWCalendarTimeSelectorProtocol {
     
     @IBOutlet weak var dateLabel: UILabel!
@@ -16,24 +17,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     fileprivate var singleDate: Date = Date()
     fileprivate var multipleDates: [Date] = []
     
-    fileprivate let demo: [String] = [
-        "DateMonth",//0
-        "Month",//1
-        "Year",//2
-        "Time",//3
-        "DateMonth + Year",//4
-        "Month + Year",//5
-        "Year + Time",//6
-        "DateMonth + Time",//7
-        "DateMonth + Year + Time",//8
-        "Month + Year + Time",//9
-        "Multiple Selection (Simple)",//10
-        "Multiple Selection (Pill)",//11
-        "Multiple Selection (LinkedBalls)",//12
-        "Date + Year + Time (without Top Panel)",//13
-        "Date + Year + Time (without Top Container)",//14
-        "Date Range Selection"//15
-    ]
+    fileprivate let demo: [Rows] = Rows.allCases
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selector = UIStoryboard(name: "WWCalendarTimeSelector", bundle: nil).instantiateInitialViewController() as! WWCalendarTimeSelector
@@ -43,71 +27,69 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         selector.optionCurrentDateRange.setStartDate(multipleDates.first ?? singleDate)
         selector.optionCurrentDateRange.setEndDate(multipleDates.last ?? singleDate)
         
-        switch (indexPath as NSIndexPath).row {
-            
-        case 0:
-            selector.optionStyles.showDateMonth(true)
-            selector.optionStyles.showMonth(false)
-            selector.optionStyles.showYear(false)
-            selector.optionStyles.showTime(false)
-        case 1:
-            selector.optionStyles.showDateMonth(false)
-            selector.optionStyles.showMonth(true)
-            selector.optionStyles.showYear(false)
-            selector.optionStyles.showTime(false)
-        case 2:
-            selector.optionStyles.showDateMonth(false)
-            selector.optionStyles.showMonth(false)
-            selector.optionStyles.showYear(true)
-            selector.optionStyles.showTime(false)
-        case 3:
-            selector.optionStyles.showDateMonth(false)
-            selector.optionStyles.showMonth(false)
-            selector.optionStyles.showYear(false)
-            selector.optionStyles.showTime(true)
-        case 4:
-            selector.optionStyles.showDateMonth(true)
-            selector.optionStyles.showMonth(false)
-            selector.optionStyles.showYear(true)
-            selector.optionStyles.showTime(false)
-        case 5:
-            selector.optionStyles.showDateMonth(false)
-            selector.optionStyles.showMonth(true)
-            selector.optionStyles.showYear(true)
-            selector.optionStyles.showTime(false)
-        case 6:
-            selector.optionStyles.showDateMonth(false)
-            selector.optionStyles.showMonth(false)
-            selector.optionStyles.showYear(true)
-            selector.optionStyles.showTime(true)
-        case 7:
-            selector.optionStyles.showDateMonth(true)
-            selector.optionStyles.showMonth(false)
-            selector.optionStyles.showYear(false)
-            selector.optionStyles.showTime(true)
-        case 8:
-            break
-        case 9:
-            selector.optionStyles.showMonth(true)
-        case 10:
-            selector.optionSelectionType = WWCalendarTimeSelectorSelection.multiple
-            selector.optionMultipleSelectionGrouping = .simple
-        case 11:
-            selector.optionSelectionType = WWCalendarTimeSelectorSelection.multiple
-            selector.optionMultipleSelectionGrouping = .pill
-        case 12:
-            selector.optionSelectionType = WWCalendarTimeSelectorSelection.multiple
-            selector.optionMultipleSelectionGrouping = .linkedBalls
-        case 13:
-            selector.optionShowTopPanel = false
-        case 14:
-            selector.optionShowTopContainer = false
-            selector.optionLayoutHeight = 300
-        case 15:
-            selector.optionSelectionType = WWCalendarTimeSelectorSelection.range
-            
-        default:
-            break
+        switch demo[indexPath.row] {
+            case  ._00DateMonth:
+                selector.optionStyles.showDateMonth(true)
+                selector.optionStyles.showMonth(false)
+                selector.optionStyles.showYear(false)
+                selector.optionStyles.showTime(false)
+            case  ._01Month:
+                selector.optionStyles.showDateMonth(false)
+                selector.optionStyles.showMonth(true)
+                selector.optionStyles.showYear(false)
+                selector.optionStyles.showTime(false)
+            case  ._02Year:
+                selector.optionStyles.showDateMonth(false)
+                selector.optionStyles.showMonth(false)
+                selector.optionStyles.showYear(true)
+                selector.optionStyles.showTime(false)
+            case  ._03Time:
+                selector.optionStyles.showDateMonth(false)
+                selector.optionStyles.showMonth(false)
+                selector.optionStyles.showYear(false)
+                selector.optionStyles.showTime(true)
+            case  ._04DateMonth_Year:
+                selector.optionStyles.showDateMonth(true)
+                selector.optionStyles.showMonth(false)
+                selector.optionStyles.showYear(true)
+                selector.optionStyles.showTime(false)
+            case  ._05Month_Year:
+                selector.optionStyles.showDateMonth(false)
+                selector.optionStyles.showMonth(true)
+                selector.optionStyles.showYear(true)
+                selector.optionStyles.showTime(false)
+            case  ._06Year_Time:
+                selector.optionStyles.showDateMonth(false)
+                selector.optionStyles.showMonth(false)
+                selector.optionStyles.showYear(true)
+                selector.optionStyles.showTime(true)
+            case  ._07DateMonth_Time:
+                selector.optionStyles.showDateMonth(true)
+                selector.optionStyles.showMonth(false)
+                selector.optionStyles.showYear(false)
+                selector.optionStyles.showTime(true)
+            case  ._08DateMonth_Year_Time:
+                break
+            case  ._09Month_Year_Time:
+                selector.optionStyles.showMonth(true)
+            case  ._10Multiple_Selection_Simple:
+                selector.optionSelectionType = WWCalendarTimeSelectorSelection.multiple
+                selector.optionMultipleSelectionGrouping = .simple
+            case  ._11Multiple_SelectionPillZ:
+                selector.optionSelectionType = WWCalendarTimeSelectorSelection.multiple
+                selector.optionMultipleSelectionGrouping = .pill
+            case  ._12Multiple_SelectionLinkedBallsZ:
+                selector.optionSelectionType = WWCalendarTimeSelectorSelection.multiple
+                selector.optionMultipleSelectionGrouping = .linkedBalls
+            case  ._13Date_Year_Time_without_Top_Panel:
+                selector.optionShowTopPanel = false
+            case  ._14Date_Year_Time_without_Top_Container:
+                selector.optionShowTopContainer = false
+                selector.optionLayoutHeight = 300
+            case  ._15Date_Range_Selection:
+                selector.optionShowTopContainer = false
+                selector.optionLayoutHeight = 300
+                selector.optionSelectionType = WWCalendarTimeSelectorSelection.range
         }
         
         present(selector, animated: true, completion: nil)
@@ -126,7 +108,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             assertionFailure("cell identifier 'cell' not found!")
             return UITableViewCell()
         }
-        cell.textLabel?.text = demo[(indexPath as NSIndexPath).row]
+        cell.textLabel?.text = demo[(indexPath as NSIndexPath).row].rawValue
         return cell
     }
     

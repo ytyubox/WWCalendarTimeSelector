@@ -8,67 +8,7 @@
 
 import UIKit
 
-@objc public final class WWCalendarTimeSelectorStyle: NSObject {
-    fileprivate(set) public var showDateMonth: Bool = true
-    fileprivate(set) public var showMonth: Bool = false
-    fileprivate(set) public var showYear: Bool = true
-    fileprivate(set) public var showTime: Bool = true
-    fileprivate var isSingular = false
-    
-    public func showDateMonth(_ show: Bool) {
-        showDateMonth = show
-        showMonth = show ? false : showMonth
-        if show && isSingular {
-            showMonth = false
-            showYear = false
-            showTime = false
-        }
-    }
-    
-    public func showMonth(_ show: Bool) {
-        showMonth = show
-        showDateMonth = show ? false : showDateMonth
-        if show && isSingular {
-            showDateMonth = false
-            showYear = false
-            showTime = false
-        }
-    }
-    
-    public func showYear(_ show: Bool) {
-        showYear = show
-        if show && isSingular {
-            showDateMonth = false
-            showMonth = false
-            showTime = false
-        }
-    }
-    
-    public func showTime(_ show: Bool) {
-        showTime = show
-        if show && isSingular {
-            showDateMonth = false
-            showMonth = false
-            showYear = false
-        }
-    }
-    
-    fileprivate func countComponents() -> Int {
-        return (showDateMonth ? 1 : 0) +
-            (showMonth ? 1 : 0) +
-            (showYear ? 1 : 0) +
-            (showTime ? 1 : 0)
-    }
-    
-    fileprivate convenience init(isSingular: Bool) {
-        self.init()
-        self.isSingular = isSingular
-        showDateMonth = true
-        showMonth = false
-        showYear = false
-        showTime = false
-    }
-}
+
 
 /// Set `optionSelectionType` with one of the following:
 ///
