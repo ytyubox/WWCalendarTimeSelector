@@ -46,11 +46,16 @@ public enum WWCalendarTimeSelectorMultipleSelectionGrouping {
 /// `English`: Displayed as "EEE', 'd' 'MMM' 'yyyy": for example, Tue, 17 Jul 2018
 ///
 /// `Japanese`: "yyyy'年 'MMM' 'd'日 'EEE": for example, 2018年 7月 15日 日
-public enum WWCalendarTimeSelectorMultipleDateOutputFormat{
+public struct WWCalendarTimeSelectorMultipleDateOutputFormat{
+    internal init(_ dateFormat: String) {
+        self.dateFormat = dateFormat
+    }
+    
     /// English format
-    case english
+    static var english = WWCalendarTimeSelectorMultipleDateOutputFormat("EEE', 'd' 'MMM' 'yyyy")
     /// Japanese format
-    case japanese
+    static var japanese = WWCalendarTimeSelectorMultipleDateOutputFormat("yyyy'年 'MMM' 'd'日 'EEE")
+    var dateFormat:String
 }
 
 /// Set `optionTimeStep` to customise the period of time which the users will be able to choose. The step will show the user the available minutes to select (with exception of `OneMinute` step, see *Note*).

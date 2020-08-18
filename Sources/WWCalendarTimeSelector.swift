@@ -124,7 +124,7 @@ open class WWCalendarTimeSelector: UIViewController, UITableViewDelegate, UITabl
     /// - Note:
     /// Selector will show the earliest selected date's month by default.
     open var optionUnderlinedDates: Set<Date> = []
-
+    
     open var optionRangeOfEnabledDates: WWCalendarTimeSelectorEnabledDateRange = WWCalendarTimeSelectorEnabledDateRange()
     
     /// Set the background blur effect, where background is a `UIVisualEffectView`. Available options are as `UIBlurEffectStyle`:
@@ -777,12 +777,12 @@ open class WWCalendarTimeSelector: UIViewController, UITableViewDelegate, UITabl
         let picker = self
         let del = delegate
         switch optionSelectionType {
-        case .single:
-            del?.WWCalendarTimeSelectorDone(picker, date: optionCurrentDate)
-        case .multiple:
-            del?.WWCalendarTimeSelectorDone(picker, dates: multipleDates)
-        case .range:
-            del?.WWCalendarTimeSelectorDone(picker, dates: optionCurrentDateRange.array)
+            case .single:
+                del?.WWCalendarTimeSelectorDone(picker, date: optionCurrentDate)
+            case .multiple:
+                del?.WWCalendarTimeSelectorDone(picker, dates: multipleDates)
+            case .range:
+                del?.WWCalendarTimeSelectorDone(picker, dates: optionCurrentDateRange.array)
         }
         dismiss()
     }
@@ -1449,16 +1449,16 @@ open class WWCalendarTimeSelector: UIViewController, UITableViewDelegate, UITabl
                 if let calRow = sv as? WWCalendarRowView {
                     calRow.tag = (indexPath as NSIndexPath).row + 1
                     switch optionSelectionType {
-                    case .single:
-                        calRow.selectedDates = [optionCurrentDate]
-                    case .multiple:
-                        calRow.selectedDates = optionCurrentDates
-                    case .range:
-                        calRow.selectedDates = Set(optionCurrentDateRange.array)
+                        case .single:
+                            calRow.selectedDates = [optionCurrentDate]
+                        case .multiple:
+                            calRow.selectedDates = optionCurrentDates
+                        case .range:
+                            calRow.selectedDates = Set(optionCurrentDateRange.array)
                     }
-
+                    
                     calRow.underlinedDates = optionUnderlinedDates
-
+                    
                     calRow.setNeedsDisplay()
                     if let fd = flashDate {
                         if calRow.flashDate(fd) {
@@ -1511,12 +1511,9 @@ open class WWCalendarTimeSelector: UIViewController, UITableViewDelegate, UITabl
             cell.textLabel?.textColor = date == multipleDatesLastAdded ? optionSelectorPanelFontColorMultipleSelectionHighlight : optionSelectorPanelFontColorMultipleSelection
             
             // output date format
-            switch optionMultipleDateOutputFormat {
-            case .english:
-                cell.textLabel?.text = date.stringFromFormat("EEE', 'd' 'MMM' 'yyyy")
-            case .japanese:
-                cell.textLabel?.text = date.stringFromFormat("yyyy'年 'MMM' 'd'日 'EEE")
-            }
+            cell.textLabel?.text = date.stringFromFormat(optionMultipleDateOutputFormat.dateFormat)
+            
+            
             
         }
         
@@ -1716,85 +1713,85 @@ open class WWCalendarTimeSelector: UIViewController, UITableViewDelegate, UITabl
     internal func WWCalendarRowDidSelect(_ date: Date) {
         if delegate?.WWCalendarTimeSelectorShouldSelectDate(self, date: date) ?? true {
             switch optionSelectionType {
-            case .single:
-                optionCurrentDate = optionCurrentDate.change(year: date.year, month: date.month, day: date.day)
-                updateDate()
+                case .single:
+                    optionCurrentDate = optionCurrentDate.change(year: date.year, month: date.month, day: date.day)
+                    updateDate()
                 
-            case .multiple:
-                var indexPath: IndexPath
-                var indexPathToReload: IndexPath? = nil
-                
-                if let d = multipleDatesLastAdded {
-                    let indexToReload = multipleDates.firstIndex(of: d)!
-                    indexPathToReload = IndexPath(row: indexToReload, section: 0)
-                }
-                
-                if let indexToDelete = multipleDates.firstIndex(of: date) {
-                    // delete...
-                    indexPath = IndexPath(row: indexToDelete, section: 0)
-                    optionCurrentDates.remove(date)
+                case .multiple:
+                    var indexPath: IndexPath
+                    var indexPathToReload: IndexPath? = nil
                     
-                    selMultipleDatesTable.scrollToRow(at: indexPath, at: UITableView.ScrollPosition.middle, animated: true)
-                    
-                    multipleDatesLastAdded = nil
-                    selMultipleDatesTable.beginUpdates()
-                    selMultipleDatesTable.deleteRows(at: [indexPath], with: UITableView.RowAnimation.left)
-                    if let ip = indexPathToReload , ip != indexPath {
-                        selMultipleDatesTable.reloadRows(at: [ip], with: UITableView.RowAnimation.fade)
+                    if let d = multipleDatesLastAdded {
+                        let indexToReload = multipleDates.firstIndex(of: d)!
+                        indexPathToReload = IndexPath(row: indexToReload, section: 0)
                     }
-                    selMultipleDatesTable.endUpdates()
-                }
-                else {
-                    // insert...
-                    var shouldScroll = false
                     
-                    optionCurrentDates.insert(date)
-                    let indexToAdd = multipleDates.firstIndex(of: date)!
-                    indexPath = IndexPath(row: indexToAdd, section: 0)
-                    
-                    if indexPath.row < optionCurrentDates.count - 1 {
+                    if let indexToDelete = multipleDates.firstIndex(of: date) {
+                        // delete...
+                        indexPath = IndexPath(row: indexToDelete, section: 0)
+                        optionCurrentDates.remove(date)
+                        
                         selMultipleDatesTable.scrollToRow(at: indexPath, at: UITableView.ScrollPosition.middle, animated: true)
+                        
+                        multipleDatesLastAdded = nil
+                        selMultipleDatesTable.beginUpdates()
+                        selMultipleDatesTable.deleteRows(at: [indexPath], with: UITableView.RowAnimation.left)
+                        if let ip = indexPathToReload , ip != indexPath {
+                            selMultipleDatesTable.reloadRows(at: [ip], with: UITableView.RowAnimation.fade)
+                        }
+                        selMultipleDatesTable.endUpdates()
                     }
                     else {
-                        shouldScroll = true
-                    }
-                    
-                    multipleDatesLastAdded = date
-                    selMultipleDatesTable.beginUpdates()
-                    selMultipleDatesTable.insertRows(at: [indexPath], with: UITableView.RowAnimation.right)
-                    if let ip = indexPathToReload {
-                        selMultipleDatesTable.reloadRows(at: [ip], with: UITableView.RowAnimation.fade)
-                    }
-                    selMultipleDatesTable.endUpdates()
-                    
-                    if shouldScroll {
-                        selMultipleDatesTable.scrollToRow(at: indexPath, at: UITableView.ScrollPosition.middle, animated: true)
-                    }
+                        // insert...
+                        var shouldScroll = false
+                        
+                        optionCurrentDates.insert(date)
+                        let indexToAdd = multipleDates.firstIndex(of: date)!
+                        indexPath = IndexPath(row: indexToAdd, section: 0)
+                        
+                        if indexPath.row < optionCurrentDates.count - 1 {
+                            selMultipleDatesTable.scrollToRow(at: indexPath, at: UITableView.ScrollPosition.middle, animated: true)
+                        }
+                        else {
+                            shouldScroll = true
+                        }
+                        
+                        multipleDatesLastAdded = date
+                        selMultipleDatesTable.beginUpdates()
+                        selMultipleDatesTable.insertRows(at: [indexPath], with: UITableView.RowAnimation.right)
+                        if let ip = indexPathToReload {
+                            selMultipleDatesTable.reloadRows(at: [ip], with: UITableView.RowAnimation.fade)
+                        }
+                        selMultipleDatesTable.endUpdates()
+                        
+                        if shouldScroll {
+                            selMultipleDatesTable.scrollToRow(at: indexPath, at: UITableView.ScrollPosition.middle, animated: true)
+                        }
                 }
                 
-            case .range:
-                
-                let rangeDate = date.beginningOfDay
-                if shouldResetRange {
-                    optionCurrentDateRange.setStartDate(rangeDate)
-                    optionCurrentDateRange.setEndDate(rangeDate)
-                    isSelectingStartRange = false
-                    shouldResetRange = false
-                }
-                else {
-                    if isSelectingStartRange {
+                case .range:
+                    
+                    let rangeDate = date.beginningOfDay
+                    if shouldResetRange {
                         optionCurrentDateRange.setStartDate(rangeDate)
+                        optionCurrentDateRange.setEndDate(rangeDate)
                         isSelectingStartRange = false
+                        shouldResetRange = false
                     }
                     else {
-                        let date0 : Date = rangeDate
-                        let date1 : Date = optionCurrentDateRange.start
-                        optionCurrentDateRange.setStartDate(min(date0, date1))
-                        optionCurrentDateRange.setEndDate(max(date0, date1))
-                        shouldResetRange = true
+                        if isSelectingStartRange {
+                            optionCurrentDateRange.setStartDate(rangeDate)
+                            isSelectingStartRange = false
+                        }
+                        else {
+                            let date0 : Date = rangeDate
+                            let date1 : Date = optionCurrentDateRange.start
+                            optionCurrentDateRange.setStartDate(min(date0, date1))
+                            optionCurrentDateRange.setEndDate(max(date0, date1))
+                            shouldResetRange = true
+                        }
                     }
-                }
-                updateDate()
+                    updateDate()
             }
             calendarTable.reloadData()
         }
@@ -1839,11 +1836,3 @@ open class WWCalendarTimeSelector: UIViewController, UITableViewDelegate, UITabl
         clockView.setNeedsDisplay()
     }
 }
-
-
-
-
-
-
-
-
