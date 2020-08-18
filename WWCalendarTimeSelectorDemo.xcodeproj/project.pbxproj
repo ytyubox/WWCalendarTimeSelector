@@ -22,6 +22,12 @@
 		00FBEF851CC8849D0046C872 /* WWCalendarTimeSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00FBEF7D1CC8849D0046C872 /* WWCalendarTimeSelector.swift */; };
 		A75052CF24EBB5C60078833C /* WWCalendarTimeSelectorStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75052CE24EBB5C60078833C /* WWCalendarTimeSelectorStyle.swift */; };
 		A75052D124EBB6FE0078833C /* Rows.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75052D024EBB6FE0078833C /* Rows.swift */; };
+		A75052D324EBBA0D0078833C /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75052D224EBBA0D0078833C /* Enums.swift */; };
+		A75052D524EBBAAA0078833C /* WWClockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75052D424EBBAAA0078833C /* WWClockView.swift */; };
+		A75052D724EBBACB0078833C /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75052D624EBBACB0078833C /* Extension.swift */; };
+		A75052D924EBBB300078833C /* WWCalendarTimeSelectorEnabledDateRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75052D824EBBB300078833C /* WWCalendarTimeSelectorEnabledDateRange.swift */; };
+		A75052DB24EBBB810078833C /* WWCalendarTimeSelectorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75052DA24EBBB810078833C /* WWCalendarTimeSelectorProtocol.swift */; };
+		A75052DD24EBBCB40078833C /* WWCalendarRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75052DC24EBBCB40078833C /* WWCalendarRowView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +48,12 @@
 		00FBEF7D1CC8849D0046C872 /* WWCalendarTimeSelector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WWCalendarTimeSelector.swift; sourceTree = "<group>"; };
 		A75052CE24EBB5C60078833C /* WWCalendarTimeSelectorStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWCalendarTimeSelectorStyle.swift; sourceTree = "<group>"; };
 		A75052D024EBB6FE0078833C /* Rows.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rows.swift; sourceTree = "<group>"; };
+		A75052D224EBBA0D0078833C /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
+		A75052D424EBBAAA0078833C /* WWClockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWClockView.swift; sourceTree = "<group>"; };
+		A75052D624EBBACB0078833C /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
+		A75052D824EBBB300078833C /* WWCalendarTimeSelectorEnabledDateRange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWCalendarTimeSelectorEnabledDateRange.swift; sourceTree = "<group>"; };
+		A75052DA24EBBB810078833C /* WWCalendarTimeSelectorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWCalendarTimeSelectorProtocol.swift; sourceTree = "<group>"; };
+		A75052DC24EBBCB40078833C /* WWCalendarRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWCalendarRowView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,8 +101,13 @@
 			isa = PBXGroup;
 			children = (
 				00FBEF861CC889740046C872 /* Helper */,
-				00FBEF7D1CC8849D0046C872 /* WWCalendarTimeSelector.swift */,
 				A75052CE24EBB5C60078833C /* WWCalendarTimeSelectorStyle.swift */,
+				A75052D224EBBA0D0078833C /* Enums.swift */,
+				00FBEF7D1CC8849D0046C872 /* WWCalendarTimeSelector.swift */,
+				A75052DC24EBBCB40078833C /* WWCalendarRowView.swift */,
+				A75052D824EBBB300078833C /* WWCalendarTimeSelectorEnabledDateRange.swift */,
+				A75052DA24EBBB810078833C /* WWCalendarTimeSelectorProtocol.swift */,
+				A75052D424EBBAAA0078833C /* WWClockView.swift */,
 				A75052D024EBB6FE0078833C /* Rows.swift */,
 				00FBEF7C1CC8849D0046C872 /* WWCalendarTimeSelector.storyboard */,
 			);
@@ -106,6 +123,7 @@
 				00FBEF791CC8849D0046C872 /* NSDate+Timepiece.swift */,
 				00FBEF7A1CC8849D0046C872 /* NSDateComponents+Timepiece.swift */,
 				00FBEF7B1CC8849D0046C872 /* String+Timepiece.swift */,
+				A75052D624EBBACB0078833C /* Extension.swift */,
 			);
 			name = Helper;
 			sourceTree = "<group>";
@@ -149,10 +167,9 @@
 			};
 			buildConfigurationList = 007161C41CC87C25002CB119 /* Build configuration list for PBXProject "WWCalendarTimeSelectorDemo" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				English,
 				en,
 				Base,
 			);
@@ -193,9 +210,15 @@
 				00FBEF811CC8849D0046C872 /* NSDate+Timepiece.swift in Sources */,
 				007161CF1CC87C26002CB119 /* ViewController.swift in Sources */,
 				007161CD1CC87C26002CB119 /* AppDelegate.swift in Sources */,
+				A75052D924EBBB300078833C /* WWCalendarTimeSelectorEnabledDateRange.swift in Sources */,
+				A75052DB24EBBB810078833C /* WWCalendarTimeSelectorProtocol.swift in Sources */,
+				A75052DD24EBBCB40078833C /* WWCalendarRowView.swift in Sources */,
 				00FBEF801CC8849D0046C872 /* NSCalendar+Timepiece.swift in Sources */,
+				A75052D724EBBACB0078833C /* Extension.swift in Sources */,
 				A75052CF24EBB5C60078833C /* WWCalendarTimeSelectorStyle.swift in Sources */,
+				A75052D324EBBA0D0078833C /* Enums.swift in Sources */,
 				A75052D124EBB6FE0078833C /* Rows.swift in Sources */,
+				A75052D524EBBAAA0078833C /* WWClockView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
